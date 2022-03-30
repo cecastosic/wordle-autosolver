@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { DictionaryRoutingModule } from './dictionary-routing.module';
 import { ListComponent } from './list/list.component';
+import { MatTableModule } from '@angular/material/table'  
+
 
 
 @NgModule({
@@ -11,7 +13,8 @@ import { ListComponent } from './list/list.component';
   ],
   imports: [
     CommonModule,
-    DictionaryRoutingModule
+    DictionaryRoutingModule,
+    MatTableModule
   ]
 })
 export class DictionaryModule { }
