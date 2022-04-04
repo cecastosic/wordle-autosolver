@@ -6,21 +6,22 @@ import { DictionaryList } from './types';
   providedIn: 'root',
 })
 export class DictionaryService {
-  dictionary$ =  new BehaviorSubject<DictionaryList[]>([]);
+  dictionary$ = new BehaviorSubject<DictionaryList[]>([]);
+
   constructor() {
-    console.log('created');
     this.fetchTxt();
   }
 
-
   private fetchTxt = () =>
-  fetch('../assets/wordle_dictionary.txt')
-    .then((response) => response.text())
-    .then((data) => {
-     this.dictionary$.next(data.split(/\r?\n/).map((word, index) => {
-        return { index: index + 1, word };
-      }));
-    });
+    fetch('../assets/wordle_dictionary.txt')
+      .then((response) => response.text())
+      .then((data) => {
+        this.dictionary$.next(
+          data.split(/\r?\n/).map((word, index) => {
+            return { index: index + 1, word };
+          })
+        );
+      });
 
   //getDictionary = () => this.fetchTxt();
 }
