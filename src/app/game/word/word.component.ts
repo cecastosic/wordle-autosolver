@@ -8,12 +8,13 @@ import { GameService } from '../game.service';
   styleUrls: ['./word.component.scss'],
 })
 export class WordComponent implements OnInit {
-  randomWord = this.gameService.getRandomWord();
+  alphabet = this.gameService.getAlphabet();
+  randomWord$ = this.gameService.randomWord$;
 
   constructor(private readonly gameService: GameService) {}
 
   ngOnInit(): void {
     //TODO
-    console.log(this.randomWord);
+    //this.gameService.getRandomWord().subscribe((word) => (this.word = word));
   }
 }

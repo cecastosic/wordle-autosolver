@@ -1,0 +1,17 @@
+.keyboard {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+}
+
+.keyboard > div {
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    height: 3rem;
+    width: 3rem;
+}
