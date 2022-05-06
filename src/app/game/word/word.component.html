@@ -4,9 +4,6 @@ create service that will take care of game / get random word from dictionary
 
 page with keyboard all letters -->
 
-<p>{{ randomWord$ | async }}</p>
-<div class="keyboard">
-  <div *ngFor="let letter of alphabet">
-    <p>{{ letter.toUpperCase() }}</p>
-  </div>
-</div>
+<p>{{ word$ | async }}</p>
+
+<!--it should be -->
