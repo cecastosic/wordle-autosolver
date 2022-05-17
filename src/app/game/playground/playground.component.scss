@@ -5,3 +5,23 @@
     margin: 0 auto;
     width: 35rem;
 }
+
+.words {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    overflow: hidden;
+    padding: 1rem 0;
+}
+
+.keyboard {
+    align-content: center;
+    align-items: center;
+    bottom: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    width: 35rem;
+}
+
