@@ -55,12 +55,14 @@ export class GameService {
       'r',
       's',
       't',
+      'enter',
       'u',
       'v',
       'w',
       'x',
       'y',
       'z',
+      'delete',
     ];
     return alphabet;
   };

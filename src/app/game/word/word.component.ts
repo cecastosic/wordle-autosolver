@@ -7,7 +7,14 @@ import { Observable } from 'rxjs';
   styleUrls: ['./word.component.scss'],
 })
 export class WordComponent {
-  @Input() word$: Observable<string | null>;
-
+  @Input()
+  word$!: Observable<string | null>;
+  rows: number[] = [].constructor(5);
+  boxes: number[] = [].constructor(5);
   constructor() {}
+
+  getArrayWithSplit(word: string | null) {
+    if (word) return word.split('').map((letter) => letter);
+    else return;
+  }
 }

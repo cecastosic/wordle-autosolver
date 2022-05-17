@@ -12,4 +12,10 @@ export class AlphabetComponent implements OnInit {
   constructor(private readonly gameService: GameService) {}
 
   ngOnInit(): void {}
+
+  myFunc(letter: string) {
+    if (letter === 'delete' || letter === 'enter')
+      alert('press delete or enter');
+    else console.log(letter);
+  }
 }

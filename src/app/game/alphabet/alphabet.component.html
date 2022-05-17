@@ -1,6 +1,6 @@
 <div class="keyboard">
     <div *ngFor="let letter of alphabet">
-      <button mat-button color="primary">{{ letter.toUpperCase() }}</button>
+      <button mat-button color="primary" (click)="myFunc(letter)">{{ letter.toUpperCase() }}</button>
     </div>
   </div>
   
