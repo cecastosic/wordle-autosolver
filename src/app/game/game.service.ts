@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { DictionaryList } from '../dictionary/types';
 import { DictionaryService } from '../dictionary/dictionary.service';
-import { map, Observable, Subscription } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { __values } from 'tslib';
 
 @Injectable({
@@ -13,6 +13,7 @@ export class GameService {
   randomWord$: BehaviorSubject<string | null> = new BehaviorSubject<
     string | null
   >(null);
+  inputWord$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
 
   constructor(private dictionaryService: DictionaryService) {
     this.dictionary$ = dictionaryService.dictionary$;

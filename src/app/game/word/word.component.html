@@ -1,13 +1,19 @@
-  <div>
-    <div class="row random">
-      <div *ngFor="let letter of getArrayWithSplit(word$ | async)">
-        <div class="letter-box">{{ letter }}</div>
-      </div>
-    </div>
-
-    <div *ngFor="let number of rows" class="row">
-      <div *ngFor="let number of boxes">
-        <div class="letter-box">{{ "" }}</div>
-      </div>
+<div>
+  <div class="row random">
+    <div *ngFor="let letter of getArrayWithSplit(word$ | async)">
+      <div class="letter-box">{{ letter.toUpperCase() }}</div>
     </div>
   </div>
+
+  <!-- <div *ngFor="let number of rows" class="row">
+      <div *ngFor="let number of boxes, let i = index">
+        <div class="letter-box">{{ inputWord$.value[i] }}</div>
+      </div>
+    </div>
+ -->
+  <div class="row">
+    <div *ngFor="let number of boxes; let i = index">
+      <div class="letter-box">{{ inputWord$.value[i] }}</div>
+    </div>
+  </div>
+</div>
