@@ -5,15 +5,11 @@
     </div>
   </div>
 
-  <!-- <div *ngFor="let number of rows" class="row">
-      <div *ngFor="let number of boxes, let i = index">
-        <div class="letter-box">{{ inputWord$.value[i] }}</div>
+   <div *ngFor="let attempt of inputWords$.value, let i = index" class="row">
+      <div *ngFor="let number of boxes, let j = index">
+        <div class="letter-box">{{ inputWords$.value[i][j] }}</div>
       </div>
-    </div>
- -->
-  <div class="row">
-    <div *ngFor="let number of boxes; let i = index">
-      <div class="letter-box">{{ inputWord$.value[i] }}</div>
-    </div>
-  </div>
+    </div> 
+
+  <!-- fix enter , fix delete, on enter increment index -->
 </div>

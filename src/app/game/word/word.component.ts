@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { GameService } from '../game.service';
 
 @Component({
@@ -12,7 +12,10 @@ export class WordComponent {
   word$!: Observable<string | null>;
   rows: number[] = [].constructor(5);
   boxes: number[] = [].constructor(5);
-  inputWord$ = this.gameService.inputWord$;
+  inputWords$ = this.gameService.inputWords$;
+  totalAttempts$: Observable<number> = this.gameService.inputWords$.pipe(
+    map((words) => words.length)
+  );
 
   constructor(private readonly gameService: GameService) {}
 
