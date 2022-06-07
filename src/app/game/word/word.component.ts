@@ -1,26 +1,15 @@
-import { Component, Input } from '@angular/core';
-import { map, Observable } from 'rxjs';
-import { GameService } from '../game.service';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-word',
   templateUrl: './word.component.html',
   styleUrls: ['./word.component.scss'],
 })
-export class WordComponent {
+export class WordComponent implements OnInit {
   @Input()
-  word$!: Observable<string | null>;
-  rows: number[] = [].constructor(5);
-  boxes: number[] = [].constructor(5);
-  inputWords$ = this.gameService.inputWords$;
-  totalAttempts$: Observable<number> = this.gameService.inputWords$.pipe(
-    map((words) => words.length)
-  );
+  word: string | null | undefined;
 
-  constructor(private readonly gameService: GameService) {}
+  constructor() {}
 
-  getArrayWithSplit(word: string | null) {
-    if (word) return word.split('').map((letter) => letter);
-    else return;
-  }
+  ngOnInit(): void {}
 }

@@ -76,38 +76,76 @@ export class GameService {
     return alphabet;
   };
 
+  //split functionality
   makeInputWord(character: string) {
     if (character === KeyAction.DELETE) {
-      this.inputWords$.next(this.inputWords$.getValue().slice(0, -1));
+      this.deleteCharacter();
     } else if (character === KeyAction.ENTER) {
-      if (this.inputWords$.value.length < 5) {
-        alert('Not enough letters');
-      } else {
-        if (
-          this.inputWords$.value.join('').toLowerCase() ===
-          this.randomWord$.value
-        ) {
-          alert('TADA');
-        } else {
-          alert('NOPE');
-        }
-      }
-    } else {
-      combineLatest([this.currentAttempt$, this.inputWords$])
-        .pipe(first())
-        .subscribe(([attempt, words]) => {
-          const newArr = [...words];
-          newArr[attempt] =
-            words.length <= 5 ? words[attempt] + character : words[attempt];
-          this.inputWords$.next(newArr);
-        });
-      // if (this.inputWords$.value.length < 5) {
-      //   // this.inputWords$.next([
-      //   //   ...this.inputWords$.getValue(),
-      //   //   character.toUpperCase(),
-      //   // ]);
-
-      // }
-    }
+      this.submitWord();
+    } else this.makeWord(character);
   }
+
+  makeWord = (character: string) => {
+    combineLatest([this.currentAttempt$, this.inputWords$])
+      .pipe(first())
+      .subscribe(([attempt, words]) => {
+        const newArr = [...words];
+        newArr[attempt] =
+          words[attempt].length < 5
+            ? words[attempt] + character
+            : words[attempt];
+        this.inputWords$.next(newArr);
+      });
+  };
+
+  deleteCharacter = () => {
+    combineLatest([this.currentAttempt$, this.inputWords$])
+      .pipe(first())
+      .subscribe(([attempt, words]) => {
+        const newArr = [...words];
+        newArr[attempt] =
+          words[attempt].length > 0
+            ? words[attempt].slice(0, -1)
+            : words[attempt];
+        this.inputWords$.next(newArr);
+      });
+  };
+
+  submitWord = () => {
+    combineLatest([this.currentAttempt$, this.inputWords$])
+      .pipe(first())
+      .subscribe(([attempt, words]) => {
+        if (words[attempt].length < 5) {
+          alert('Not enough letters');
+        } else {
+          if (words[attempt] === this.randomWord$.value) {
+            alert('TADA');
+          } else {
+            if (attempt == 4) {
+              alert('the game is over');
+            } else {
+              alert('NOPE');
+              this.currentAttempt$.next(attempt + 1);
+              this.checkLetters(words[attempt]);
+            }
+          }
+        }
+      });
+  };
+
+  checkLetters = (word: string) => {
+    // check if the letter is in the random
+    // check if the letter is on the right position
+    const obj = word.split('').forEach((element) => {
+      if (this.randomWord$.value?.includes(element)) {
+        if (this.randomWord$.value.indexOf(element) == word.indexOf(element)) {
+          return console.log(`${element} is on right place`);
+        } else {
+          return console.log(`${element} is not on the right place`);
+        }
+      } else {
+        return console.log(`${element} is not in the random word`);
+      }
+    });
+  };
 }
