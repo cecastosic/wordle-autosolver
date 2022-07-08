@@ -22,6 +22,4 @@ export class DictionaryService {
           })
         );
       });
-
-  //getDictionary = () => this.fetchTxt();
 }

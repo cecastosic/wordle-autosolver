@@ -8,8 +8,12 @@ import { Component, Input, OnInit } from '@angular/core';
 export class WordComponent implements OnInit {
   @Input()
   word: string | null | undefined;
+  @Input()
+  hints: string[] | undefined;
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.hints);
+  }
 }

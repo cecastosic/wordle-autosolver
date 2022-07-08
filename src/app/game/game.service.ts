@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { DictionaryList } from '../dictionary/types';
 import { DictionaryService } from '../dictionary/dictionary.service';
@@ -22,8 +23,15 @@ export class GameService {
     '',
   ]);
   currentAttempt$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  hints$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
+  message$: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(
+    null
+  );
 
-  constructor(private dictionaryService: DictionaryService) {
+  constructor(
+    private dictionaryService: DictionaryService,
+    private snackBar: MatSnackBar
+  ) {
     this.dictionary$ = dictionaryService.dictionary$;
     this.getRandomWord().subscribe((word) => this.randomWord$.next(word));
   }
@@ -116,15 +124,21 @@ export class GameService {
       .pipe(first())
       .subscribe(([attempt, words]) => {
         if (words[attempt].length < 5) {
-          alert('Not enough letters');
+          this.message$.next('Not enough letters');
+          this.message$.value && this.openSnackBar(this.message$.value);
+        } else if (!this.checkWord(words[attempt])) {
+          this.message$.next('Not in word list');
+          //doesn't work
+          this.message$.value && this.openSnackBar(this.message$.value);
         } else {
           if (words[attempt] === this.randomWord$.value) {
-            alert('TADA');
+            //alert('TADA');
           } else {
             if (attempt == 4) {
-              alert('the game is over');
+              this.message$.next('The game is over');
+              this.message$.value && this.openSnackBar(this.message$.value);
             } else {
-              alert('NOPE');
+              //alert('NOPE');
               this.currentAttempt$.next(attempt + 1);
               this.checkLetters(words[attempt]);
             }
@@ -136,16 +150,40 @@ export class GameService {
   checkLetters = (word: string) => {
     // check if the letter is in the random
     // check if the letter is on the right position
-    const obj = word.split('').forEach((element) => {
+    const hintsList: string[] = [];
+    word.split('').forEach((element) => {
       if (this.randomWord$.value?.includes(element)) {
         if (this.randomWord$.value.indexOf(element) == word.indexOf(element)) {
-          return console.log(`${element} is on right place`);
+          console.log(`${element} is on right place`);
+          hintsList.push('correct');
         } else {
-          return console.log(`${element} is not on the right place`);
+          console.log(`${element} is not on the right place`);
+          hintsList.push('present');
         }
       } else {
-        return console.log(`${element} is not in the random word`);
+        console.log(`${element} is not in the random word`);
+        hintsList.push('absent');
       }
+      return this.hints$.next(hintsList);
     });
+  };
+
+  openSnackBar(message: string) {
+    this.snackBar.open(message, '', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+    });
+  }
+
+  checkWord = (inputWord: String) => {
+    return this.dictionary$.pipe(
+      map((words) => {
+        if (words.length) {
+          return words.some((w) => w.word === inputWord);
+        }
+        return false;
+      })
+    );
   };
 }

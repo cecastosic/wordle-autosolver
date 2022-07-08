@@ -16,6 +16,8 @@ export class WordsComponent {
   totalAttempts$: Observable<number> = this.gameService.inputWords$.pipe(
     map((words) => words.length)
   );
+  @Input()
+  hints$ = this.gameService.hints$;
 
   constructor(private readonly gameService: GameService) {}
 
