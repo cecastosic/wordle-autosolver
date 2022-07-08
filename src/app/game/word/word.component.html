@@ -1,5 +1,5 @@
-<app-letter [letter]="word?.charAt(0)" [hint]="hints && hints[0] ? hints[0] : ''"></app-letter>
-<app-letter [letter]="word?.charAt(1)" [hint]="hints && hints[1] ? hints[1] : ''"></app-letter>
-<app-letter [letter]="word?.charAt(2)" [hint]="hints && hints[2] ? hints[2] : ''"></app-letter>
-<app-letter [letter]="word?.charAt(3)" [hint]="hints && hints[3] ? hints[3] : ''"></app-letter>
-<app-letter [letter]="word?.charAt(4)" [hint]="hints && hints[4] ? hints[4] : ''"></app-letter>
+<app-letter [letter]="word?.charAt(0)" [hint]="(hints$ | async)?.[0]"></app-letter>
+<app-letter [letter]="word?.charAt(1)" [hint]="(hints$ | async)?.[1]"></app-letter>
+<app-letter [letter]="word?.charAt(2)" [hint]="(hints$ | async)?.[2]"></app-letter>
+<app-letter [letter]="word?.charAt(3)" [hint]="(hints$ | async)?.[3]"></app-letter>
+<app-letter [letter]="word?.charAt(4)" [hint]="(hints$ | async)?.[4]"></app-letter>

@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { GameService } from '../game.service';
+import { map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-word',
@@ -8,12 +10,21 @@ import { Component, Input, OnInit } from '@angular/core';
 export class WordComponent implements OnInit {
   @Input()
   word: string | null | undefined;
-  @Input()
-  hints: string[] | undefined;
 
-  constructor() {}
+  @Input()
+  attempt: number;
+
+  currentAttempt$ = this.gameService.currentAttempt$;
+
+  hints$: Observable<string[]> = this.currentAttempt$.pipe(
+    map((currentAttempt) =>
+      currentAttempt > this.attempt ? this.gameService.getHints(this.word) : []
+    )
+  );
+
+  constructor(readonly gameService: GameService) {}
 
   ngOnInit(): void {
-    console.log(this.hints);
+    console.log(this.attempt);
   }
 }

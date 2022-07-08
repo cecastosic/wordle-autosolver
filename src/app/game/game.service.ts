@@ -36,6 +36,31 @@ export class GameService {
     this.getRandomWord().subscribe((word) => this.randomWord$.next(word));
   }
 
+  getHints = (word: string | null | undefined): string[] => {
+    const hintsList: string[] = [];
+
+    if (!word) {
+      return [];
+    }
+
+    word.split('').forEach((element) => {
+      if (this.randomWord$.value?.includes(element)) {
+        if (this.randomWord$.value.indexOf(element) == word.indexOf(element)) {
+          console.log(`${element} is on right place`);
+          hintsList.push('correct');
+        } else {
+          console.log(`${element} is not on the right place`);
+          hintsList.push('present');
+        }
+      } else {
+        console.log(`${element} is not in the random word`);
+        hintsList.push('absent');
+      }
+    });
+
+    return hintsList;
+  };
+
   getRandomWord = () => {
     return this.dictionary$.pipe(
       map((words) => {
@@ -119,6 +144,9 @@ export class GameService {
       });
   };
 
+  // check letters if more same letters, letter position
+  // gamw win and the rest of issues that doesn't work
+
   submitWord = () => {
     combineLatest([this.currentAttempt$, this.inputWords$])
       .pipe(first())
@@ -136,36 +164,16 @@ export class GameService {
           } else {
             if (attempt == 4) {
               this.message$.next('The game is over');
+              //doesn't work
               this.message$.value && this.openSnackBar(this.message$.value);
             } else {
               //alert('NOPE');
               this.currentAttempt$.next(attempt + 1);
-              this.checkLetters(words[attempt]);
+              // this.checkLetters(words, attempt);
             }
           }
         }
       });
-  };
-
-  checkLetters = (word: string) => {
-    // check if the letter is in the random
-    // check if the letter is on the right position
-    const hintsList: string[] = [];
-    word.split('').forEach((element) => {
-      if (this.randomWord$.value?.includes(element)) {
-        if (this.randomWord$.value.indexOf(element) == word.indexOf(element)) {
-          console.log(`${element} is on right place`);
-          hintsList.push('correct');
-        } else {
-          console.log(`${element} is not on the right place`);
-          hintsList.push('present');
-        }
-      } else {
-        console.log(`${element} is not in the random word`);
-        hintsList.push('absent');
-      }
-      return this.hints$.next(hintsList);
-    });
   };
 
   openSnackBar(message: string) {

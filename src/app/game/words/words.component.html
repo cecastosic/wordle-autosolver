@@ -2,7 +2,7 @@
   <app-word [word]="word$ | async" class="row random"></app-word>
 
   <div *ngFor="let attempt of inputWords$.value; let i = index;">
-      <app-word [word]="attempt" class="row" [hints]="hints$.value"></app-word>
+      <app-word [word]="attempt" class="row" [attempt]="i"></app-word>
   </div>  
 
 </div>

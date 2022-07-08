@@ -10,7 +10,7 @@ export class LetterComponent implements OnInit {
   @Input()
   letter: string | undefined;
   @Input()
-  hint: string = '';
+  hint: string | undefined;
 
   constructor(private readonly gameService: GameService) {}
 
